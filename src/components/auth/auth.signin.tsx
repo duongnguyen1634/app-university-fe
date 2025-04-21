@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import React, { useRef } from "react";
-import logo from "../../../public/image/login.webp"; // with import
+import logo from "../../../public/image/greenhouse2.jpg"
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import SwitchTheme from "../switchbtn/switch.btn";
@@ -59,17 +59,17 @@ function Login() {
     return (
       <div>
         <div className=" pl-5 pt-0 h-[160px] sm:pl-3 sm:pl-0 sm:mb-0 sm:h-[240px] sm:pt-6 lg:h-[165px]  lg:pt-3 xl:mb-4 xl:ml-0 xl:h-[180px] 2xl:pt-4 2xl:mb-5 ">
-          <h1 className="text-white text-4xl  sm:text-blue-500  font-normal text-start  ml-4  sm:ml-3 sm:text-4xl lg:ml-0 lg:text-3xl 2xl:mb-2">
-            Hello,
+          <h1 className=" text-4xl text-[#3D8D7A]  font-normal text-start  ml-4  sm:ml-3 sm:text-4xl lg:ml-0 lg:text-3xl 2xl:mb-2 dark: text-[#FBFFE4]">
+            Yolo Farm 
           </h1>
-          <h2 className="text-white text-4xl sm:text-4xl lg:text-3xl sm:text-blue-500 font-black text-start  ml-4 sm:ml-3  sm:mt-2 lg:ml-0 lg:mt-0">
+          <h2 className="text-4xl lg:text-3xl text-[#3D8D7A]  font-black text-start  ml-4 sm:ml-3  sm:mt-2 lg:ml-0 lg:mt-0 dark: text-white">
             Wellcome!
           </h2>
-          <p className="text-white text-xl sm:text-lg  w-[380px] sm:dark:text-white sm:text-black sm:w-[300px] ml-4 sm:ml-3 mt-3 h-[40px] block sm:mt-5 lg:mt-0 xl:mt-2 lg:ml-0">
+          <p className="text-black text-xl sm:text-lg  w-[380px] sm:dark:text-white sm:text-black sm:w-[300px] ml-4 sm:ml-3 mt-3 h-[40px] block sm:mt-5 lg:mt-0 xl:mt-2 lg:ml-0 dark: text-white">
             {t("title1")}
             <Link
               href="/auth/register"
-              className="font-bold text-blue-600 sm:text-blue-500 pl-1 pr-1"
+              className="font-bold text-[#FBFFE4]  pl-1 pr-1"
             >
               {t("title2")}
             </Link>
@@ -85,7 +85,7 @@ function Login() {
         <div className="xl:mt-7 ml-3 w-full  pl-7 pr-14 sm:px-0">
           <label
             htmlFor="Username"
-            className="text-lg sm:text-base font-semibold block mb-1 xl:text-base sm:dark:text-white "
+            className="text-lg sm:text-base font-semibold block mb-1 xl:text-base dark:text-white "
           >
             Email
           </label>
@@ -113,7 +113,7 @@ function Login() {
         <div className="sm:mt-4 lg:mt-3 ml-3 w-full xl:mt-[6px] pl-7 pr-14 sm:px-0">
           <label
             htmlFor="Password "
-            className="text-lg sm:text-base sm:dark:text-white block mb-1  font-semibold  xl:text-base  "
+            className="text-lg sm:text-base dark:text-white block mb-1  font-semibold  xl:text-base  "
           >
             Password
           </label>
@@ -152,7 +152,7 @@ function Login() {
     return (
       <>
         <button
-          className="block border-none rounded-[50px] py-[5px] w-[60%] mx-auto text-xl text-white font-semibold bg-gradient-to-r from-blue-400  to-pink-400 sm:hover:opacity-70 mt-10 sm:mt-6 lg:text-lg lg:py-[3px] lg:mt-4 xl:mt-5 2xl:mt-5 xl:py-[5px]"
+          className="block border-none rounded-[50px] py-[5px] w-[60%] mx-auto text-xl text-white font-semibold bg-[#3D8D7A] sm:hover:opacity-70 mt-10 sm:mt-6 lg:text-lg lg:py-[3px] lg:mt-4 xl:mt-5 2xl:mt-5 xl:py-[5px] dark:bg-[#FBFFE4] dark:text-black"
           onClick={handleSubmit}
         >
           Login
@@ -193,13 +193,17 @@ function Login() {
   const imgright = () => {
     return (
       <>
-        <Image src={logo} className="w-[100%] h-full xl:object-cover" alt="" />
+        <Image
+        src={logo}
+        className="xl:object-cover rounded-xl mt-20"
+        alt=""
+      />
       </>
     );
   };
   return (
     <div>
-      <div className="flex justify-center items-center h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 dark:bg-gradient-to-r dark:from-gray-800 dark:via-gray-800 dark:to-gray-800 ">
+      <div className="flex justify-center items-center h-screen bg-[#3D8D7A] from-indigo-500 via-purple-500 to-pink-500 dark:bg-gradient-to-r dark:from-gray-800 dark:via-gray-800 dark:to-gray-800 ">
         <div
           className="card flex justify-content-center"
           style={{ height: "30px !important" }}
@@ -207,14 +211,14 @@ function Login() {
           <Toast ref={toast} position="bottom-right" />
         </div>
 
-        <div className="relative dark:bg-gray-600 bg-gradient-login-main  sm:bg-none overflow-hidden h-[100vh] w-[100vw] px-10 shadow-lg bg-white rounded-md flex justify-center items-center sm:px-0 sm:items-start lg:items-stretch sm:w-[450px] sm:h-[700px]  lg:w-[800px] lg:h-[530px] lg:grid-cols-2 xl:w-[1000px] xl:h-[600px] 2xl:w-[1300px] 2xl:h-[600px]">
+        <div className="relative dark:bg-gray-600 bg-[#3D8D7A]-login-main  sm:bg-none overflow-hidden h-[100vh] w-[100vw] px-10 shadow-lg bg-white rounded-md flex justify-center items-center sm:px-0 sm:items-start lg:items-stretch sm:w-[450px] sm:h-[700px]  lg:w-[800px] lg:h-[530px] lg:grid-cols-2 xl:w-[1000px] xl:h-[600px] 2xl:w-[1300px] 2xl:h-[600px]">
           <div className="">
             {headertitle()}
             {formInput()}
 
             {footerLogin()}
           </div>
-          <div className=" ml-10 dark:bg-gray-600 overflow-hidden hidden lg:block w-[50%]">
+          <div className="mx-10 my-10 dark:bg-gray-600 overflow-hidden hidden lg:block w-[50%]">
             {imgright()}
           </div>
           <div className="absolute top-[15px] right-4">
