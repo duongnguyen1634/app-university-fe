@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import MainHome from "./bodyHome/mainHome";
 import NavigateHome from "../header/header";
 import Loading from "../Loadingpage/loading";
+import Footer from "../footer/footer";
 import { useEffect, useState } from "react";
 import { useThemeContext } from "@/library/ThemeProvider";
 
@@ -19,6 +20,7 @@ function CmpHome() {
         <div>
           <NavigateHome />
           <MainHome />
+          <Footer/>
         </div>
       )}
     </>
