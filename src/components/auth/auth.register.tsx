@@ -4,13 +4,16 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Toast } from "primereact/toast";
-import logo from "../../../public/image/register.webp"; // with import
+//import logo from "../../../public/image/register.webp"; // with import
+import logo from "../../../public/image/greenhouse1.jpg"
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import SwitchTheme from "../switchbtn/switch.btn";
 import { useThemeContext } from "@/library/ThemeProvider";
 import { useTranslations } from "next-intl";
 import LocalSwitcher from "../SwitchLangue/switcherLangue";
+
+
 async function fetchData(url: string, body: any) {
   // You can await here
   try {
@@ -28,6 +31,10 @@ async function fetchData(url: string, body: any) {
 function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  // thêm mới biến state
+  const [nameDisplay, setNameDisplay] = useState("");
+  const [errNameDisplay, setErrNameDisplay] = useState("");
+
   const [confirmpassword, setConfirmpassword] = useState("");
   const [errUser, setErrUser] = useState("");
   const [errpass, setErrpass] = useState("");
@@ -35,6 +42,7 @@ function Register() {
   const router = useRouter();
   const toast = useRef(null);
   const t = useTranslations("RegisterPage");
+  
   const showError = (Message: string) => {
     //@ts-ignore
     toast.current.show({
@@ -52,12 +60,24 @@ function Register() {
 
       return;
     }
-    if (errconfirmpass.length != 0 || confirmpassword.length == 0) {
-      if (confirmpassword.length == 0) {
-        setErrConfirmPass(" Name display is required");
+    // if (errconfirmpass.length != 0 || confirmpassword.length == 0) {
+    //   if (confirmpassword.length == 0) {
+    //     setErrConfirmPass(" Name display is required");
+    //   }
+    //   return;
+    // }
+    if (password !== confirmpassword) {
+      setErrConfirmPass("Passwords do not match");
+      return;
+    }
+    
+    if (errNameDisplay.length != 0 || nameDisplay.length == 0) {
+      if (nameDisplay.length == 0) {
+        setErrNameDisplay("Name display is required");
       }
       return;
     }
+    
     if (errpass.length != 0 || password.length == 0) {
       if (password.length == 0) {
         setErrpass("Password is required");
@@ -70,7 +90,7 @@ function Register() {
       "http://localhost:8000/api/v1/auth/registerSystem",
       {
         email: username,
-        name: confirmpassword,
+        name: nameDisplay,
         password: password,
       }
     );
@@ -102,20 +122,20 @@ function Register() {
         md:pt-6  lg:h-[90px]  lg:pt-0 
         xl:mb-4 xl:h-[120px]  2xl:pt-5 2xl:mb-5"
       >
-        <h1 className="text-white text-4xl sm:text-4xl lg:text-3xl sm:text-blue-500 font-normal text-start  ml-5 sm:ml-4 2xl:mb-2">
-          Hello,
+        <h1 className="dark:text-[#FBFFE4] text-4xl sm:text-4xl lg:text-3xl sm:text-[#3D8D7A] font-normal text-start  ml-5 sm:ml-4 2xl:mb-2">
+          Yolo Farm
         </h1>
-        <h2 className="text-white text-4xl sm:text-4xl lg:text-3xl sm:text-blue-500 font-black text-start  ml-5 sm:ml-4 sm:mt-4 lg:mt-0">
+        <h2 className="dark:text-white text-4xl sm:text-4xl lg:text-3xl sm:text-[#3D8D7A] font-black text-start  ml-5 sm:ml-4 sm:mt-4 lg:mt-0">
           Wellcome!
         </h2>
         <p
-          className="text-white text-xl w-[380px]  ml-5 mt-3 h-[40px] block sm:ml-4  sm:mt-5 sm:text-base sm:text-black sm:dark:text-white
+          className="dark:text-white text-xl w-[380px]  ml-5 mt-3 h-[40px] block sm:ml-4  sm:mt-5 sm:text-base sm:text-black sm:dark:text-white
           sm:w-[300px] lg:mt-0 xl:mt-2"
         >
           {t("title1")}
           <Link
             href="login"
-            className="font-bold text-blue-600 sm:text-blue-500"
+            className="dark:text-[#FBFFE4] font-bold text-[#3D8D7A] sm:text-[#3D8D7A]"
           >
             {t("title2")}
           </Link>{" "}
@@ -155,7 +175,7 @@ function Register() {
           </span>
         </div>
 
-        <div className=" mt-2 ml-3 text-base w-full xl:mt-3  pl-7 pr-14 sm:px-0">
+        {/* <div className=" mt-2 ml-3 text-base w-full xl:mt-3  pl-7 pr-14 sm:px-0">
           <label
             htmlFor="Password "
             className="text-xl  block mb-1  font-semibold text-white mt-5  sm:text-black sm:dark:text-white sm:text-base md:mt-4 xl:mt-5 xl:text-base  "
@@ -170,11 +190,11 @@ function Register() {
             value={confirmpassword}
             onChange={(e) => {
               if (e.target.value.length !== 0) {
-                setErrConfirmPass("");
+                setErrNameDisplay("");
               } else {
-                setErrConfirmPass(" Name display is required");
+                setErrNameDisplay(" Name display is required");
               }
-              setConfirmpassword(e.target.value);
+              setErrNameDisplay(e.target.value);
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
@@ -184,9 +204,38 @@ function Register() {
           />
 
           <span className="text-black font-semibold  text-lg sm:text-base sm:mt-0 items-center block sm:text-red-500  mt-[2px] md:text-base  lg:text-base  h-2 xl:mt-0 xl:mb-1 xl:h-2    ">
-            {errconfirmpass ?? ""}
+            {errNameDisplay ?? ""}
+          </span>
+        </div> */}
+
+        <div className=" mt-2 ml-3 text-base w-full xl:mt-3  pl-7 pr-14 sm:px-0">
+          <label
+            htmlFor="NameDisplay"
+            className="text-xl block mb-1 font-semibold text-white mt-5 sm:text-black sm:dark:text-white sm:text-base md:mt-4 xl:mt-5 xl:text-base"
+          >
+            Name display
+          </label>
+          <input
+            type="text"
+            id="NameDisplay"
+            placeholder="Enter Name display..."
+            className="border w-full px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-md"
+            value={nameDisplay}
+            onChange={(e) => {
+              if (e.target.value.length !== 0) {
+                setErrNameDisplay("");
+              } else {
+                setErrNameDisplay("Name display is required");
+              }
+              setNameDisplay(e.target.value);
+            }}
+          />
+          <span className="text-black font-semibold text-lg sm:text-base sm:text-red-500 mt-[2px] block h-2 xl:mb-1 xl:h-2">
+            {errNameDisplay ?? ""}
           </span>
         </div>
+
+
         <div className=" mt-2 ml-3 text-base w-full xl:mt-3 pl-7 pr-14 sm:px-0">
           <label
             htmlFor="Password "
@@ -214,6 +263,33 @@ function Register() {
             {errpass ?? ""}
           </span>
         </div>
+        <div className=" mt-2 ml-3 text-base w-full xl:mt-3 pl-7 pr-14 sm:px-0">
+          <label
+            htmlFor="ConfirmPassword"
+            className="text-xl text-white mt-5 sm:text-black sm:dark:text-white sm:text-base block mb-1 font-semibold md:mt-4 xl:mt-5 xl:text-base"
+          >
+            Confirm Password
+          </label>
+          <input
+            type="password"
+            id="ConfirmPassword"
+            placeholder="Confirm your Password..."
+            className="border w-full px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-md"
+            value={confirmpassword}
+            onChange={(e) => {
+              if (e.target.value.length !== 0) {
+                setErrConfirmPass("");
+              } else {
+                setErrConfirmPass("Confirm password is required");
+              }
+              setConfirmpassword(e.target.value);
+            }}
+          />
+          <span className="text-black font-semibold text-lg sm:text-base sm:text-red-500 mt-[2px] block h-2 xl:mb-1 xl:h-2">
+            {errconfirmpass ?? ""}
+          </span>
+        </div>
+
       </div>
     );
   };
@@ -221,7 +297,7 @@ function Register() {
     return (
       <>
         <button
-          className="block border-none rounded-[50px] py-2 text-2xl sm:text-xl w-[60%] mx-auto  text-white font-semibold bg-gradient-to-r from-blue-400  to-pink-400 hover:opacity-70 mt-8  sm:mt-10 lg:text-lg lg:py-[3px] lg:mt-8 xl:mt-9 2xl:mt-9 xl:py-[5px]"
+          className="block border-none rounded-[50px] py-2 text-2xl sm:text-xl w-[60%] mx-auto font-semibold bg-[#3D8D7A] hover:opacity-70 mt-8  sm:mt-10 lg:text-lg lg:py-[3px] lg:mt-8 xl:mt-9 2xl:mt-9 xl:py-[5px] dark:bg-[#FBFFE4] dark:text-black "
           onClick={handleSubmit}
         >
           Register
@@ -259,17 +335,22 @@ function Register() {
       </>
     );
   };
+
   const imgright = () => {
-    return (
-      <>
-        <Image src={logo} className="w-[100%] h-full xl:object-cover" alt="" />
-      </>
+  return (
+    <>
+      <Image
+        src={logo}
+        className="xl:object-cover rounded-xl mt-20"
+        alt=""
+      />
+    </>
     );
   };
 
   return (
     <div>
-      <div className="flex justify-center items-center h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 dark:bg-gradient-to-r dark:from-gray-800 dark:via-gray-800 dark:to-gray-800 ">
+      <div className="flex justify-center items-center h-screen bg-gradient-to-r from-[#3D8D7A] via-[#3D8D7A] to-[#3D8D7A] from-indigo-500 via-purple-500 to-pink-500 dark:bg-gradient-to-r from-[#3D8D7A] via-[#3D8D7A] to-[#3D8D7A] dark:from-gray-800 dark:via-gray-800 dark:to-gray-800 ">
         <div
           className="card flex justify-content-center"
           style={{ height: "30px !important" }}
@@ -282,7 +363,7 @@ function Register() {
             {formInput()}
             {footerLogin()}
           </div>
-          <div className=" ml-10 bg-white dark:bg-gray-600 overflow-hidden hidden lg:block w-[50%]">
+          <div className=" mx-10 my-10 bg-white dark:bg-gray-600 overflow-hidden hidden lg:block w-[50%]">
             {imgright()}
           </div>
           <div className="absolute top-[15px] right-4">
