@@ -38,10 +38,10 @@ function Header() {
     const UserIcon = (login : boolean) => {
       if (login) {
         return(
-          <Link href={"/Home"} className="contents"><img src= {userPic} width={40}height={40}/></Link>
+          <Link href={"/profile"} className="contents"><img src= {userPic} width={40}height={40}/></Link>
         )
       } else{
-        <Link href={"/Home"}><Avatar icon="pi pi-user" size= "large" shape= "square"  /></Link>
+        <Link href={"/profile"}><Avatar icon="pi pi-user" size= "large" shape= "square"  /></Link>
       }
     }
 
@@ -51,7 +51,8 @@ function Header() {
       <div className=' bg-mau3 flex flex-wrap justify-between px-5 py-2 rounded-b-2xl relative' >
                 <div className='flex justify-center flex-col'>
                     <h1 className="font-josefinsan font-extrabold text-15 text-mau1">
-                        Yolo<br/>Farm
+                    <Link href={"/"}>Yolo<br/>Farm</Link>
+                        
                     </h1>
                 </div>
                 <div className='flex flex-wrap flex-row gap-3'>
