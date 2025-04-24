@@ -24,7 +24,15 @@ const config: Config = {
         "main-size": "100vh",
       },
       fontSize: {},
+      fontFamily: {
+        josefin: ["Josefin Sans", "sans-serif"],
+        dosis: ["Dosis", "sans-serif"],
+      },
       colors: {
+        mau1: "rgb(61, 141, 122)",
+        mau2: 'rgb(179, 216, 168)',
+        mau3: "rgb(251, 255, 228)",
+        mau4: "rgb(163, 209, 198)",
         textPink: "rgb(255 120 120)",
       },
     },

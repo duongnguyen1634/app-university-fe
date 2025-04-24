@@ -1,7 +1,6 @@
 "use client";
 
 import NavigateHome from "@/components/header/header";
-import Footer from "@/components/footer/footer";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -30,7 +29,7 @@ export default function ProfilePage() {
   }
 
   if (!session) {
-    return <p>Bạn cần đăng nhập để truy cập trang này.</p>;
+    // return <p>Bạn cần đăng nhập để truy cập trang này.</p>;
   }
 
   // Hàm lưu thay đổi (Giả sử bạn sẽ gửi dữ liệu lên API)
@@ -66,10 +65,10 @@ export default function ProfilePage() {
               {activeTab === "view" ? (
                 <>
                   <p>
-                    <strong>Họ và tên:</strong> {session.user.name}
+                    <strong>Họ và tên:</strong> {session?.user.name}
                   </p>
                   <p>
-                    <strong>Email:</strong> {session.user.email}
+                    <strong>Email:</strong> {session?.user.email}
                   </p>
                   <p>
                     <strong>Authentication:</strong>{" "}
@@ -147,7 +146,6 @@ export default function ProfilePage() {
         </div>
       </main>
 
-      <Footer />
     </div>
   );
 }
