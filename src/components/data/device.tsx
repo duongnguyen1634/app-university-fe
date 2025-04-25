@@ -1,49 +1,63 @@
-import { start } from "repl";
-
-export const device = [
-    {
-        id: 1,
-        name: 'Ánh sáng',
-        mode:'Tự động',
-        status: true,
-        value: 80,
-        measurement: 'W/mm²',
-        action: 'Chiếu sáng',
-        startvalue: 0,
-        endvalue: 100,
-        starttime: '08:00',
-        endtime: '18:00',
-        nofication: 'Báo động khi dưới giá trị',
-        timenofication: '08:00',
-    },
-    {
-        id: 2,
-        name: 'Nhiệt độ',
-        mode: 'Lên lịch',
-        status: true,
-        value: 80,
-        measurement: '°C',
-        action: 'Điều chỉnh nhiệt độ',
-        startvalue: 0,
-        endvalue: 100,
-        starttime: '02:00',
-        endtime: '18:00',
-        nofication: 'Báo động khi dưới giá trị',
-        timenofication: '08:00',
-    },
-    {
-        id: 3,
-        name: 'Độ ẩm',
-        mode:'Thủ công',
-        status: true,
-        value: 80,
-        measurement: '%', 
-        action: 'Tưới cây',
-        startvalue: 0,
-        endvalue: 100,
-        starttime: '08:00',
-        endtime: '18:00',
-        nofication: 'Báo động khi dưới giá trị',
-        timenofication: '08:00',
-    }
-]
+export interface User {
+    id: string;
+    name: string;
+    email: string;
+    password: string;
+    createdAt: Date;
+    phone: string;
+    refreshToken?: string | null;
+    notifications?: Notify[];
+    devices?: Device[];
+    settings?: Setting[];
+  }
+  
+  export interface Notify {
+    id: string;
+    message: string;
+    read: boolean;
+    userId: string;
+    createdAt: Date;
+    user?: User;
+  }
+  
+  export interface Device {
+    id: string;
+    name: string;
+    userId: string;
+    type: string;
+    action: boolean;
+    auto: boolean;
+    data?: DeviceData[];
+    settings?: DeviceSetting[];
+    user?: User;
+  }
+  
+  export interface DeviceData {
+    id: string;
+    deviceId: string;
+    value: number;
+    time: Date;
+    action: boolean;
+    device?: Device;
+  }
+  
+  export interface Setting {
+    id: string;
+    timeStart: Date;
+    timeEnd: Date;
+    status: string;
+    userId: string;
+    devices?: DeviceSetting[];
+    user?: User;
+  }
+  
+  export interface DeviceSetting {
+    DeviceSettingId: string;
+    deviceId: string;
+    settingId: string;
+    valueStart: number;
+    valueEnd: number;
+    device?: Device;
+    setting?: Setting;
+  }
+  

@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import type { Metadata } from "next";
 
-import CmpHome from "@/components/Home/cmpHome";
+import CmpHome from "@/app/[locale]/(User)/home/page";
 import { authOptions } from "../utils/authOptions";
 
 export const metadata: Metadata = {
