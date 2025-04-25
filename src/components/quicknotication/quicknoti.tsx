@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Notify } from "../data/device";
 
 function QuickNoti () {
 
@@ -48,20 +49,7 @@ function QuickNoti () {
         
                 </div>
             )
-        }
-
-        const cardList = [
-            new Cardinfo("Thiết bị 1", "đang tưới cây", new Date()),
-            new Cardinfo("Thiết bị 2", "đang bật đèn", new Date()),
-            new Cardinfo("Thiết bị 3", "đang đo nhiệt độ", new Date()),
-            new Cardinfo("Thiết bị 4", "đang sạc pin", new Date()),
-            new Cardinfo("Thiết bị 5", "đang chạy quạt", new Date()),
-            new Cardinfo("Thiết bị 6", "đang lọc nước", new Date())
-        ];
-        
-
-    
-    
+ 
     return(
         <div className="no-scrollbar flex flex-row gap-4 overflow-x-auto p-4 flex-nowrap overflow-x-scroll">
             {cardList.map((card, index) => DisplayCard(card, index))}

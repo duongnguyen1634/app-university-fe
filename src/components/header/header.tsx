@@ -33,18 +33,18 @@ function Header() {
 
     const [userName, changeName] = useState('Thinh')
     const [userPic, changePic] = useState('https://i.pinimg.com/474x/3c/a2/e9/3ca2e93f4fd079363b42f8d8114b4e82.jpg');
-    const [login, changeUi] = useState(true);
+    // const [login, changeUi] = useState(true);
 
-    const UserIcon = (login : boolean) => {
-      if (login) {
-        return(
-          <Link href={"/profile"} className="contents"><img src= {userPic} width={40}height={40}/></Link>
-        )
-      } else{
-        <Link href={"/profile"}><Avatar icon="pi pi-user" size= "large" shape= "square"  /></Link>
-      }
-    }
-
+    // const UserIcon = (login : boolean) => {
+    //   if (login) {
+    //     return(
+    //       <Link href={"/login"} className="contents"><img src= {userPic} width={40}height={40}/></Link>
+    //     )
+    //   } else{
+    //     <Link href={"/login"} className="contents"><img src= {userPic} width={40}height={40}/></Link>
+    //   }
+    // }
+ 
 
   return (
     <header className="sticky top-0 left-0 w-full z-50 ">
@@ -63,7 +63,7 @@ function Header() {
     
                     <div className="flex flex-col justify-center items-center">
                       <div className=" border-2 border-mau1 rounded-2xl p-1">
-                        {UserIcon(login)}
+                      <Link href={"/login"} className="contents"><img src= {userPic} width={40}height={40}/></Link>
                       </div>
                     </div>
                 </div>
