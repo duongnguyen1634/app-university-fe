@@ -34,12 +34,12 @@ function Time({
     <div className="w-full h-fit flex flex-col gap-3 py-3">
       <h2 className="font-josefin font-bold text-xl">Cài đặt lên lịch:</h2>
       <div className="flex justify-center gap-3 px-3">
-        <div className="bg-mau1 py-3 px-5 rounded-lg">
+        <div className="bg-mau1 py-3 px-5 rounded-lg w-full">
           <input
             type="date"
             value={formatDate(device.startTime)}
             onChange={handleStartTimeChange}
-            className="text-mau3 bg-mau1 font-dosis text-base w-full"
+            className="text-mau3 bg-mau1 font-dosis text-base"
           />
         </div>
         <Image alt="To" src={"/icon/To.svg"} width={24} height={24} />

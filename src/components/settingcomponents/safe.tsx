@@ -1,37 +1,40 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-// Chỉnh sửa props để bao gồm cả onValueChange
 function Safe({
   device,
-  onValueChange, // Hàm để cập nhật giá trị từ component cha
+  onValueChange,
 }: {
   device: {
     valueStart: number;
     valueEnd: number;
   };
-  onValueChange: (newValueStart: number, newValueEnd: number) => void; // Thêm kiểu cho onValueChange
+  onValueChange: (newValueStart: number, newValueEnd: number) => void;
 }) {
   const [valueStart, setValueStart] = useState<number>(device.valueStart);
   const [valueEnd, setValueEnd] = useState<number>(device.valueEnd);
 
-  // Hàm xử lý thay đổi giá trị start
+  // Đồng bộ props từ cha nếu có thay đổi
+  useEffect(() => {
+    setValueStart(device.valueStart);
+    setValueEnd(device.valueEnd);
+  }, [device.valueStart, device.valueEnd]);
+
   const handleValueStartChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     const numericValue = newValue === "" ? 0 : parseInt(newValue, 10);
     if (Number.isInteger(numericValue)) {
       setValueStart(numericValue);
-      onValueChange(numericValue, valueEnd); // Gọi hàm onValueChange để thông báo thay đổi
+      onValueChange(numericValue, valueEnd);
     }
   };
 
-  // Hàm xử lý thay đổi giá trị end
   const handleValueEndChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     const numericValue = newValue === "" ? 0 : parseInt(newValue, 10);
     if (Number.isInteger(numericValue)) {
       setValueEnd(numericValue);
-      onValueChange(valueStart, numericValue); // Gọi hàm onValueChange để thông báo thay đổi
+      onValueChange(valueStart, numericValue);
     }
   };
 
@@ -62,7 +65,7 @@ function Safe({
               onClick={() => {
                 const newValue = valueStart + 1;
                 setValueStart(newValue);
-                onValueChange(newValue, valueEnd); // Cập nhật giá trị khi click
+                onValueChange(newValue, valueEnd);
               }}
               className="cursor-pointer"
             />
@@ -74,7 +77,7 @@ function Safe({
               onClick={() => {
                 const newValue = Math.max(0, valueStart - 1);
                 setValueStart(newValue);
-                onValueChange(newValue, valueEnd); // Cập nhật giá trị khi click
+                onValueChange(newValue, valueEnd);
               }}
               className="cursor-pointer"
             />
@@ -83,7 +86,7 @@ function Safe({
       </div>
 
       {/* Cài đặt giá trị end */}
-      <div className="flex justify-between px-4">
+      <div className="flex justify-between px-4 mt-2">
         <div className="flex items-center">
           <span className="text-lg font-dosis text-black">Giá trị kết thúc</span>
         </div>
@@ -105,7 +108,7 @@ function Safe({
               onClick={() => {
                 const newValue = valueEnd + 1;
                 setValueEnd(newValue);
-                onValueChange(valueStart, newValue); // Cập nhật giá trị khi click
+                onValueChange(valueStart, newValue);
               }}
               className="cursor-pointer"
             />
@@ -117,7 +120,7 @@ function Safe({
               onClick={() => {
                 const newValue = Math.max(0, valueEnd - 1);
                 setValueEnd(newValue);
-                onValueChange(valueStart, newValue); // Cập nhật giá trị khi click
+                onValueChange(valueStart, newValue);
               }}
               className="cursor-pointer"
             />
