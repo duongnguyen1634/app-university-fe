@@ -24,8 +24,12 @@ function Safe({
     const newValue = e.target.value;
     const numericValue = newValue === "" ? 0 : parseInt(newValue, 10);
     if (Number.isInteger(numericValue)) {
-      setValueStart(numericValue);
-      onValueChange(numericValue, valueEnd);
+      if (numericValue < valueEnd) {
+        setValueStart(numericValue);
+        onValueChange(numericValue, valueEnd);
+      } else {
+        alert("Giá trị bắt đầu phải nhỏ hơn giá trị kết thúc!");
+      }
     }
   };
 
@@ -33,8 +37,12 @@ function Safe({
     const newValue = e.target.value;
     const numericValue = newValue === "" ? 0 : parseInt(newValue, 10);
     if (Number.isInteger(numericValue)) {
-      setValueEnd(numericValue);
-      onValueChange(valueStart, numericValue);
+      if (valueStart < numericValue) {
+        setValueEnd(numericValue);
+        onValueChange(valueStart, numericValue);
+      } else {
+        alert("Giá trị kết thúc phải lớn hơn giá trị bắt đầu!");
+      }
     }
   };
 
@@ -64,8 +72,12 @@ function Safe({
               height={24}
               onClick={() => {
                 const newValue = valueStart + 1;
-                setValueStart(newValue);
-                onValueChange(newValue, valueEnd);
+                if (newValue < valueEnd) {
+                  setValueStart(newValue);
+                  onValueChange(newValue, valueEnd);
+                } else {
+                  alert("Giá trị bắt đầu phải nhỏ hơn giá trị kết thúc!");
+                }
               }}
               className="cursor-pointer"
             />
@@ -107,8 +119,12 @@ function Safe({
               height={24}
               onClick={() => {
                 const newValue = valueEnd + 1;
-                setValueEnd(newValue);
-                onValueChange(valueStart, newValue);
+                if (valueStart < newValue) {
+                  setValueEnd(newValue);
+                  onValueChange(valueStart, newValue);
+                } else {
+                  alert("Giá trị kết thúc phải lớn hơn giá trị bắt đầu!");
+                }
               }}
               className="cursor-pointer"
             />
@@ -119,8 +135,12 @@ function Safe({
               height={24}
               onClick={() => {
                 const newValue = Math.max(0, valueEnd - 1);
-                setValueEnd(newValue);
-                onValueChange(valueStart, newValue);
+                if (valueStart < newValue) {
+                  setValueEnd(newValue);
+                  onValueChange(valueStart, newValue);
+                } else {
+                  alert("Giá trị kết thúc phải lớn hơn giá trị bắt đầu!");
+                }
               }}
               className="cursor-pointer"
             />

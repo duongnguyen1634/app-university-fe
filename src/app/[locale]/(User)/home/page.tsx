@@ -8,13 +8,15 @@ import { useEffect, useState } from "react";
 import {Device} from "../../../../components/data/device";
 // import QuickNoti from "@/components/quicknotication/quicknoti";
 import Card from "@/components/devicecrad/homeDeviceCard";
+import Modal from "@/components/devicecrad/createDeviceCard";
+import Image from 'next/image';
 
 
 
 function CmpHome() {
   const { status, data: session } = useSession({ required: false });
   const accessToken = localStorage.getItem("access_token");
-  
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
@@ -32,11 +34,12 @@ function CmpHome() {
       ) : status === "loading" ? (
         <Loading />
       ) : (
-        <div>
-          <Header />
-          <div className="flex flex-col ">
+        <div className="h-screen w-screen flex flex-col justify-between p-0">
+          <Header/>
+          <div className="flex flex-col bottom-0">
+          <Card/>
             {/* <QuickNoti/> */}
-            <Card/>
+            
           </div>
           <Navigate />
         </div>
