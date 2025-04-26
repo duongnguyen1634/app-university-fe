@@ -27,12 +27,12 @@ function LoginPage() {
             
         </div>
         
-        <div className="absolute top-[15px] right-4">
+        {/* <div className="absolute top-[15px] right-4">
           <SwitchTheme />
         </div>
         <div className="absolute top-[55px] right-4">
           <LocalSwitcher />
-        </div>
+        </div> */}
         </div>
     );
 }
