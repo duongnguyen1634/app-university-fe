@@ -28,7 +28,7 @@ export default function NofiCard({ device, onDetailClick }: NofiCardProps) {
                 </div>
             </div>
 
-            {/* Nút Chi tiết */}
+            {/* Nút Chi tiết
             {onDetailClick && (
                 <button
                     onClick={onDetailClick}
@@ -36,7 +36,7 @@ export default function NofiCard({ device, onDetailClick }: NofiCardProps) {
                 >
                     Chi tiết
                 </button>
-            )}
+            )} */}
         </div>
     );
 }
