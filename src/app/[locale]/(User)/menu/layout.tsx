@@ -12,9 +12,7 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <div className="h-[80px]">
         <NavigateHome />
-      </div>
       {children}
     </>
   );

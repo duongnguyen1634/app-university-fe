@@ -1,43 +1,94 @@
 "use client";
 
 import NavigateHome from "@/components/header/header";
-import Footer from "@/components/footer/footer";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import avatarDefault from "../../../../../public/image/avatar.jpg";
+import avatarDefault from "../../../../../public/image/avatar.png";
 
 export default function ProfilePage() {
-  const { data: session, status } = useSession();
   const [activeTab, setActiveTab] = useState<"view" | "edit">("view");
-  const [name, setName] = useState(session?.user.name ?? "");
-  const [email] = useState(session?.user.email ?? "");
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [canSave, setCanSave] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (session?.user) {
-      // Kiểm tra xem có thay đổi gì trong tên không và tên không rỗng
-      if (name !== session.user.name && name.trim() !== "") {
-        setCanSave(true);
-      } else {
-        setCanSave(false);
-      }
-    }
-  }, [name, session]);
+    const storedName = localStorage.getItem("username");
+    const storedEmail = localStorage.getItem("email");
 
-  if (status === "loading") {
+    if (!storedName || !storedEmail) {
+        setError("Không tìm thấy thông tin người dùng. Vui lòng.");
+        setLoading(false);
+        return;
+    }
+
+    setName(storedName);
+    setEmail(storedEmail);
+    setLoading(false);
+}, []);
+
+  useEffect(() => {
+    // Kiểm tra nếu tên không rỗng và khác với giá trị ban đầu
+    const storedName = localStorage.getItem("username");
+    if (name.trim() !== "" && name !== storedName) {
+        setCanSave(true);
+    } else {
+        setCanSave(false);
+    }
+  }, [name]);
+
+  const handleSaveChanges = async () => {
+    const userId = localStorage.getItem("User Id"); // Lấy userId từ localStorage
+    if (!userId) {
+        console.error("User ID not found");
+        setError("Không tìm thấy User ID. Vui lòng đăng nhập lại.");
+        return;
+    }
+
+    try {
+        //console.log("handleSaveChanges called with User ID:", userId); // In ra dòng kiểm tra
+
+        const response = await fetch(`http://localhost:8000/api/v1/users/${userId}`, {
+            method: "PATCH", // Sử dụng phương thức PUT để cập nhật thông tin
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("access_token")}`, // Thêm access token nếu cần
+            },
+            body: JSON.stringify({
+                name, // Tên mới
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log("API Response:", result);
+
+        // Cập nhật lại state và localStorage với thông tin mới
+        setName(result.data.name); 
+        //setEmail(result.data.email);
+        localStorage.setItem("username", result.data.name); // Cập nhật localStorage
+        //localStorage.setItem("email", result.data.email); // Cập nhật localStorage
+
+        // Hiển thị thông báo thành công
+        alert("Thay đổi thành công");
+        setCanSave(false); // Vô hiệu hóa nút sau khi lưu
+    } catch (error) {
+        console.error("Error updating user:", error);
+        alert("Lỗi: Không thể thay đổi thông tin");
+    }
+};
+
+  if (loading) {
     return <p>Đang tải...</p>;
   }
 
-  if (!session) {
-    return <p>Bạn cần đăng nhập để truy cập trang này.</p>;
+  if (error) {
+    return <p>{error}</p>;
   }
-
-  // Hàm lưu thay đổi (Giả sử bạn sẽ gửi dữ liệu lên API)
-  const handleSaveChanges = () => {
-    console.log("Lưu thay đổi:", { name });
-    // Gửi thông tin mới lên API ở đây
-  };
 
   return (
     <div className="bg-[#3A8A7D] min-h-screen flex flex-col">
@@ -66,14 +117,14 @@ export default function ProfilePage() {
               {activeTab === "view" ? (
                 <>
                   <p>
-                    <strong>Họ và tên:</strong> {session.user.name}
+                    <strong>Họ và tên:</strong> {name}
                   </p>
                   <p>
-                    <strong>Email:</strong> {session.user.email}
+                    <strong>Email:</strong> {email}
                   </p>
                   <p>
                     <strong>Authentication:</strong>{" "}
-                    ******************************
+                    **************
                   </p>
                 </>
               ) : (
@@ -146,8 +197,6 @@ export default function ProfilePage() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }
