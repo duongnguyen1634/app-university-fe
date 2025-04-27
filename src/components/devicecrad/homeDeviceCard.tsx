@@ -119,7 +119,7 @@ function Card() {
           .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
           .then((data) => {
             setDevices(data.data); // cập nhật state
-            console.log(data)
+            //console.log("Device card:", data)
           })
           .catch((err) => {
             console.error("Lỗi khi gọi API devices:", err);
