@@ -15,24 +15,7 @@ function LoginPage() {
     
     return (
         <div className="flex items-center justify-center min-h-screen">
-        {isLogin ? <Login /> : <Register />}
-        <div className="absolute top-[100px] right-4 bg-mau3 rounded-md p-2 shadow-lg">
-            <Link href="/register">
-            <button
-            className=" hover:underline"
-            onClick={handleToggle}>
-                Đăng ký
-            </button>
-            </Link>
-            
-        </div>
-        
-        {/* <div className="absolute top-[15px] right-4">
-          <SwitchTheme />
-        </div>
-        <div className="absolute top-[55px] right-4">
-          <LocalSwitcher />
-        </div> */}
+        <Login />
         </div>
     );
 }

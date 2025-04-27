@@ -1,9 +1,10 @@
 "use client";
-
+import Navigate from "@/components/navigate/navigate";
 import NavigateHome from "@/components/header/header";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import avatarDefault from "../../../../../public/image/avatar.png";
+import avatarDefault from "../../../../../public/image/avt.jpg";
+import { useRouter } from "next/navigation";
 
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState<"view" | "edit">("view");
@@ -12,6 +13,8 @@ export default function ProfilePage() {
   const [canSave, setCanSave] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+  
 
   useEffect(() => {
     const storedName = localStorage.getItem("username");
@@ -89,6 +92,15 @@ export default function ProfilePage() {
   if (error) {
     return <p>{error}</p>;
   }
+
+  const handleLogout = () => {
+    // Xóa tất cả thông tin khỏi localStorage
+    localStorage.clear();
+
+  
+    // Chuyển hướng người dùng đến trang login
+    router.push("/auth/login")  // Hoặc bạn có thể dùng router.push("/auth/login") nếu đang sử dụng Next.js.
+  };
 
   return (
     <div className="bg-[#3A8A7D] min-h-screen flex flex-col">
@@ -194,9 +206,17 @@ export default function ProfilePage() {
             >
               Hiện thông tin
             </button>
+            <button
+              className={`py-4 px-6 rounded-xl text-lg font-semibold bg-red-800 text-mau3`}
+              
+              onClick={() => handleLogout()}
+            >
+              Đăng xuất
+            </button>
           </div>
         </div>
       </main>
+      <Navigate/>       
     </div>
   );
 }

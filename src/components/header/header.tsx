@@ -32,7 +32,7 @@ type Callback = () => void;
 function Header() {
 
     const [userName, changeName] = useState('Thinh')
-    const [userPic, changePic] = useState('https://i.pinimg.com/474x/3c/a2/e9/3ca2e93f4fd079363b42f8d8114b4e82.jpg');
+    const [userPic, changePic] = useState('https://i.pinimg.com/736x/d6/c4/2e/d6c42efdf2446dd05a722c6e8c325297.jpg');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     // const [login, changeUi] = useState(true);
 
@@ -78,8 +78,8 @@ function Header() {
                     </div > */}
     
                     <div className="flex flex-col justify-center items-center">
-                      <div className=" border-2 border-mau1 rounded-2xl p-1">
-                      <Link href={isLoggedIn ? "/profile" : "login"} className="contents"><img src= {userPic} width={40}height={40}/></Link>
+                      <div className=" border-2 border-mau1 rounded-2xl object-cover">
+                      <Link href={isLoggedIn ? "/profile" : "login"} className="contents"><img src= {userPic} width={40}height={40}className="rounded-2xl object-cover"/></Link>
                       </div>
                     </div>
                 </div>
