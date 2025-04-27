@@ -29,12 +29,18 @@ export default function DeviceGraph() {
                         "Content-Type": "application/json",
                     },
                 });
-
+                
+                console.log("Response status: ", response.status);
+                
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-
+                
                 const data = await response.json();
+                
+                localStorage.setItem("User Id", data.data[0].userId);
+                console.log("User ID saved to localStorage:", data.data[0].userId);
+
                 setDevices(data.data || []); // Đảm bảo luôn là mảng
                 setError(null);
             } catch (err) {

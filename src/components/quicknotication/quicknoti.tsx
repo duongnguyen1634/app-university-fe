@@ -49,7 +49,7 @@ function QuickNoti () {
         
                 </div>
             )
- 
+        }
     return(
         <div className="no-scrollbar flex flex-row gap-4 overflow-x-auto p-4 flex-nowrap overflow-x-scroll">
             {cardList.map((card, index) => DisplayCard(card, index))}
