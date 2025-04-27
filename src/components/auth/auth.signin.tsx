@@ -48,7 +48,14 @@ function Login() {
         showError(data.message || "Login failed");
         return;
       }
-  
+      
+      // Save username and email
+      if (data.data.user.name && data.data.user.email) {
+        localStorage.setItem("username", data.data.user.name);
+        localStorage.setItem("email", data.data.user.email);
+      } else {
+          console.error("Username or email is missing in the response");
+      }
       // Save tokens
       localStorage.setItem("access_token", data.data.token.access_token);
       localStorage.setItem("refresh_token", data.data.token.refresh_token);
