@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Device, DeviceSetting, Setting } from "../data/device";
+import { InputSwitch } from 'primereact/inputswitch';
 
 function DisplayCard({ device }: { device: Device }) {
   const [tile, changetile] = useState(device.name);
@@ -11,6 +12,7 @@ function DisplayCard({ device }: { device: Device }) {
   const [deviceSetting, changeDeviceSetting] = useState<Setting | null>(null);
   const [type, changeType] = useState<string | null>(null);
   const accessToken = localStorage.getItem("access_token");
+
 
   useEffect(() => {
     changetile(device.name);
@@ -58,11 +60,70 @@ function DisplayCard({ device }: { device: Device }) {
   }, [device.id, accessToken]);
   
 
+  const handleOnOrOff = async (mode1:boolean) => {
+    const accessToken = localStorage.getItem("access_token");
+    if (!accessToken) {
+      alert("Không tìm thấy access token.");
+      return;
+    }
+    
+    const payload = {
+      "auto": mode1
+    };
+
+    try {
+      const res = await fetch(`http://localhost:8000/api/v1/devices/${id}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+  
+      if (!res.ok) {
+        throw new Error("Lỗi Bat/Tat");
+      }
+      console.log(mode1)
+    } catch (error) {
+      console.error("Lỗi Bat/Tat", error);
+      alert("Bat/Tat thất bại!");
+    }
+  };
+
+
   return (
     <div className="my-3 mx-2 justify-evenly flex gap-3 p-3 bg-mau1 border-mau2 rounded-3xl border-4">
       <div className="flex flex-col gap-2 justify-evenly w-full text-center w-fit px-1 py-5 m-2">
         <h2 className="font-josefin font-bold text-xl text-mau3">{tile}</h2>
         <h2 className="font-josefin font-bold text-8xl text-mau3">{vale}</h2>
+        <div className="flex justify-center m-auto flex-col items-center gap-2">
+        {mode === true ? (
+          <>
+          <h2 className="font-josefin font-bold text-xl text-mau3">Tự động</h2>
+          <InputSwitch
+            checked={mode}
+            onChange={(e) => {
+              changemode(false);
+              handleOnOrOff(false);
+            }}
+          />
+          </>
+        ) : (
+          <>
+          <h2 className="font-josefin font-bold text-xl text-mau3">Lên lịch</h2>
+          <InputSwitch
+            checked={mode}
+            onChange={(e) => {
+              changemode(true);
+              handleOnOrOff(true);
+            }}
+          />
+          </>
+        )}
+          
+
+        </div>
       </div>
       <div className="flex flex-col justify-center w-full gap-2">
         <div className="flex flex-col gap-1 justify-evenly px-3 text-center">

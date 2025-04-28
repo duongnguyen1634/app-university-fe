@@ -2,6 +2,7 @@
 
 import { Setting } from "@/components/data/device";
 
+
 interface ModeProps {
   settings: Setting[];
   selectedSetting: Setting | null;

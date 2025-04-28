@@ -10,6 +10,9 @@ import { Setting,Device } from "@/components/data/device";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+        
+
+
 
 function SettingMenu() {
   const { id } = useParams(); 
@@ -20,7 +23,8 @@ function SettingMenu() {
   const [action, setAction] = useState<boolean>(false);
   const [sTime, setStartTime] = useState<Date | null>(null);
   const [eTime, setEndTime] = useState<Date | null>(null);
-  const [Device, setDevice] = useState<Device | null>(null);
+  const [Device, setDevice] = useState<Device | null>(null)
+  const [checked, setChecked] = useState(false);
   const router = useRouter();
 
 
@@ -297,30 +301,30 @@ function SettingMenu() {
       <Header />
       <div className="h-screen w-screen flex flex-col-reverse">
         <div className="bg-mau3 justify-end px-4 py-6 rounded-t-xl space-y-4">
+          {Device?.auto === true ? (
+            <>
+             <Mode 
+                  settings={allSetting || []} 
+                  selectedSetting={cruSetting} 
+                  onSelect={handleSelectSetting}
+                />
+                    <Time device={{ startTime: sTime, endTime: eTime }} onTimeChange={handleTimeChange} />
+                    <Safe device={{ valueStart, valueEnd }} onValueChange={handleValueChange} />
+            </>
+                     
+                  ) : (
+                    <div className="flex justify-center">
+                        <div className="bg-mau1 w-fit h-fit rounded-lg min-w-[162px] cursor-pointer">
+                          <h2
+                            className="font-josefin font-bold text-xl py-4 px-6 text-mau3 text-center"
+                            onClick={handleOnOrOff}
+                          >
+                            {action ? "Tắt" : "Bật"}
+                          </h2>
+                        </div>
+                      </div>
+                  )}
           
-          {/* Nếu allSetting tồn tại mới render Mode */}
-          {allSetting && (
-            <Mode 
-              settings={allSetting} 
-              selectedSetting={cruSetting} 
-              onSelect={handleSelectSetting}
-            />
-          )}
-
-          <Time device={{ startTime: sTime, endTime: eTime }} onTimeChange={handleTimeChange} />
-          <Safe device={{ valueStart, valueEnd }} onValueChange={handleValueChange} />
-          {Device?.type === "B" && (
-            <div className="flex justify-center">
-              <div className="bg-mau1 w-fit h-fit rounded-lg min-w-[162px] cursor-pointer">
-                <h2
-                  className="font-josefin font-bold text-xl py-4 px-6 text-mau3 text-center"
-                  onClick={handleOnOrOff}
-                >
-                  {action ? "Tắt" : "Bật"}
-                </h2>
-              </div>
-            </div>
-          )}
           <div className="flex justify-evenly gap-3 px-3 py-3 flex-wrap ">
             <div className="bg-mau1 w-fit h-fit rounded-lg min-w-[162px]">
                 <h2 className="font-josefin font-bold text-xl py-4 px-6 text-mau3 text-center"

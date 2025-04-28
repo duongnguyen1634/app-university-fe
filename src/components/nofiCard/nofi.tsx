@@ -24,7 +24,6 @@ export default function NofiCard({ device, onDetailClick }: NofiCardProps) {
 
                 <div className="flex flex-col ml-2 font-dosis text-mau3">
                     <h4 className="text-lg">{device.action}</h4>
-                    <p className="text-sm">{device.timenofication}</p>
                 </div>
             </div>
 

@@ -72,8 +72,7 @@ function QuickNoti() {
       >
         <h1 className="font-josefin text-lg font-bold">Thông báo</h1>
         <p className="font-dosis font-normal">
-          {noti.message} <br />
-          vào thời điểm {new Date(noti.createdAt).toLocaleTimeString()}
+          {noti.message}
         </p>
       </div>
     );
