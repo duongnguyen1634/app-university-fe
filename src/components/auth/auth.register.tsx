@@ -4,9 +4,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Toast } from "primereact/toast";
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import logo from "../../../public/image/greenhouse1.jpg";
+import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 
 async function fetchData(url: string, body: any) {
@@ -27,7 +25,6 @@ function Register() {
   const [password, setPassword] = useState("");
   const [nameDisplay, setNameDisplay] = useState("");
   const [phone, setPhone] = useState("");
-
   const [confirmpassword, setConfirmpassword] = useState("");
 
   const [errUser, setErrUser] = useState("");
@@ -56,14 +53,14 @@ function Register() {
     if (password !== confirmpassword) return setErrConfirmPass("Passwords do not match");
     if (!nameDisplay) return setErrNameDisplay("Name is required");
     if (!phone) return setErrPhone("Phone is required");
-
+  
     const response = await fetchData("http://localhost:8000/api/v1/users", {
       email: username,
       password,
       name: nameDisplay,
       phone,
     });
-
+  
     if (response.error) {
       showError(response.message);
     } else {
@@ -75,108 +72,149 @@ function Register() {
       if (!res?.error) {
         setUsername("");
         setPassword("");
-        router.push("/");
+        // Tự động chuyển qua trang login
+        router.push("/auth/login");
       } else {
         showError(res?.error);
       }
     }
   };
 
-  return (
+  const headertitle = () => (
     <div>
+      <h1 className="text-4xl text-[#3D8D7A] font-josefin font-black text-start">
+        Yolo Farm
+      </h1>
+      <h2 className="text-4xl text-[#3D8D7A] font-josefin font-black text-start">
+        Welcome!
+      </h2>
+      <p className="text-black text-xl w-full mt-3 font-dosis">
+        {t("title1")}
+        <Link href="/login" className="font-bold text-[#3D8D7A]">
+          {t("title2")}
+        </Link>
+      </p>
+    </div>
+  );
+
+  const formInput = () => (
+    <div className="w-full gap-2 m-2">
+      {/* Email */}
+      <div>
+        <label htmlFor="Email" className="text-lg font-josefin block mb-1">
+          Email
+        </label>
+        <input
+          type="email"
+          id="Email"
+          placeholder="Enter Email..."
+          className="border w-full px-2 py-1 focus:outline-none rounded-md"
+          value={username}
+          onChange={(e) => {
+            setErrUser(e.target.value.length !== 0 ? "" : "Email is required");
+            setUsername(e.target.value);
+          }}
+        />
+        <span className="text-red-500 mt-1 block">{errUser}</span>
+      </div>
+
+      {/* Name */}
+      <div>
+        <label htmlFor="Name" className="text-lg font-josefin block mb-1">
+          Name
+        </label>
+        <input
+          type="text"
+          id="Name"
+          placeholder="Enter full name..."
+          className="border w-full px-2 py-1 focus:outline-none rounded-md"
+          value={nameDisplay}
+          onChange={(e) => {
+            setErrNameDisplay(e.target.value.length !== 0 ? "" : "Name is required");
+            setNameDisplay(e.target.value);
+          }}
+        />
+        <span className="text-red-500 mt-1 block">{errNameDisplay}</span>
+      </div>
+
+      {/* Phone */}
+      <div>
+        <label htmlFor="Phone" className="text-lg font-josefin block mb-1">
+          Phone
+        </label>
+        <input
+          type="text"
+          id="Phone"
+          placeholder="Enter phone number..."
+          className="border w-full px-2 py-1 focus:outline-none rounded-md"
+          value={phone}
+          onChange={(e) => {
+            setErrPhone(e.target.value.length !== 0 ? "" : "Phone is required");
+            setPhone(e.target.value);
+          }}
+        />
+        <span className="text-red-500 mt-1 block">{errPhone}</span>
+      </div>
+
+      {/* Password */}
+      <div>
+        <label htmlFor="Password" className="text-lg font-josefin block mb-1">
+          Password
+        </label>
+        <input
+          type="password"
+          id="Password"
+          placeholder="Enter Password..."
+          className="border w-full px-2 py-1 focus:outline-none rounded-md"
+          value={password}
+          onChange={(e) => {
+            setErrpass(e.target.value.length !== 0 ? "" : "Password is required");
+            setPassword(e.target.value);
+          }}
+        />
+        <span className="text-red-500 mt-1 block">{errpass}</span>
+      </div>
+
+      {/* Confirm Password */}
+      <div>
+        <label htmlFor="ConfirmPassword" className="text-lg font-josefin block mb-1">
+          Confirm Password
+        </label>
+        <input
+          type="password"
+          id="ConfirmPassword"
+          placeholder="Confirm Password..."
+          className="border w-full px-2 py-1 focus:outline-none rounded-md"
+          value={confirmpassword}
+          onChange={(e) => {
+            setErrConfirmPass(e.target.value !== password ? "Passwords do not match" : "");
+            setConfirmpassword(e.target.value);
+          }}
+        />
+        <span className="text-red-500 mt-1 block">{errconfirmpass}</span>
+      </div>
+    </div>
+  );
+
+  const footerRegister = () => (
+    <button
+      onClick={handleSubmit}
+      className="p-2 block border-none rounded-[50px] mb-[10px] w-full mx-auto text-xl text-white font-josefin bg-[#3D8D7A] hover:opacity-70 mt-10"
+    >
+      Register
+    </button>
+  );
+
+  return (
+    <div className="flex justify-center items-center h-screen bg-mau1 m-5">
       <div className="card flex justify-content-center">
         <Toast ref={toast} position="bottom-right" />
       </div>
-      <div className="relative dark:bg-gray-600 overflow-hidden pb-10 shadow-lg bg-white rounded-md flex justify-center items-center">
-        <div className="w-full max-w-xl px-5">
-          <h1 className="text-4xl font-bold text-center text-[#3D8D7A] dark:text-white mb-3">Yolo Farm</h1>
-          <h2 className="text-2xl font-semibold text-center dark:text-white mb-2">Welcome!</h2>
-          <p className="text-center text-sm mb-5 dark:text-white">
-            {t("title1")}
-            <Link href="/login" className="text-[#3D8D7A] font-bold ml-1 dark:text-[#FBFFE4]">{t("title2")}</Link>
-          </p>
-
-          {/* Email */}
-          <label className="block text-sm font-medium mb-1 text-white dark:text-white">Email</label>
-          <input
-            type="email"
-            value={username}
-            onChange={(e) => {
-              setUsername(e.target.value);
-              setErrUser("");
-            }}
-            className="w-full mb-2 px-3 py-2 border rounded"
-            placeholder="Enter email"
-          />
-          <span className="text-sm text-red-500">{errUser}</span>
-
-          {/* Name */}
-          <label className="block mt-3 text-sm font-medium mb-1 text-white dark:text-white">Name</label>
-          <input
-            type="text"
-            value={nameDisplay}
-            onChange={(e) => {
-              setNameDisplay(e.target.value);
-              setErrNameDisplay("");
-            }}
-            className="w-full mb-2 px-3 py-2 border rounded"
-            placeholder="Enter full name"
-          />
-          <span className="text-sm text-red-500">{errNameDisplay}</span>
-
-          {/* Phone */}
-          <label className="block mt-3 text-sm font-medium mb-1 text-white dark:text-white">Phone</label>
-          <input
-            type="text"
-            value={phone}
-            onChange={(e) => {
-              setPhone(e.target.value);
-              setErrPhone("");
-            }}
-            className="w-full mb-2 px-3 py-2 border rounded"
-            placeholder="Enter phone number"
-          />
-          <span className="text-sm text-red-500">{errPhone}</span>
-
-          {/* Password */}
-          <label className="block mt-3 text-sm font-medium mb-1 text-white dark:text-white">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setErrpass("");
-            }}
-            className="w-full mb-2 px-3 py-2 border rounded"
-            placeholder="Enter password"
-          />
-          <span className="text-sm text-red-500">{errpass}</span>
-
-          {/* Confirm Password */}
-          <label className="block mt-3 text-sm font-medium mb-1 text-white dark:text-white">Confirm Password</label>
-          <input
-            type="password"
-            value={confirmpassword}
-            onChange={(e) => {
-              setConfirmpassword(e.target.value);
-              setErrConfirmPass("");
-            }}
-            className="w-full mb-2 px-3 py-2 border rounded"
-            placeholder="Confirm password"
-          />
-          <span className="text-sm text-red-500">{errconfirmpass}</span>
-
-          <button
-            onClick={handleSubmit}
-            className="mt-6 w-full bg-[#3D8D7A] hover:opacity-90 text-white dark:text-black dark:bg-[#FBFFE4] font-bold py-2 rounded-full"
-          >
-            Register
-          </button>
-        </div>
-
-        {/* Hình ảnh bên phải */}
-        <div className="hidden lg:block w-[50%]">
-          <Image src={logo} alt="Register" className="object-cover rounded-xl m-10" />
+      <div className="relative bg-white overflow-hidden px-5 shadow-lg rounded-md flex justify-center items-center w-full max-w-[500px]">
+        <div className="m-2 w-full gap-2">
+          {headertitle()}
+          {formInput()}
+          {footerRegister()}
         </div>
       </div>
     </div>

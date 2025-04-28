@@ -66,27 +66,18 @@ function DisplayCard({ device }: { device: Device }) {
       </div>
       <div className="flex flex-col justify-center w-full gap-2">
         <div className="flex flex-col gap-1 justify-evenly px-3 text-center">
-          {mode === true && deviceSetting && (
             <>
-              <h2 className="font-josefin font-bold text-xl text-mau3">TỰ ĐỘNG</h2>
-              <p className="font-dosis font-light text-xl text-mau3">thời gian</p>
+              <p className="font-dosis font-light text-xl text-mau3">Thời gian</p>
               <p className="font-dosis font-light text-xl text-mau3">
                 <span>{deviceSetting?.timeStart ? new Date(deviceSetting?.timeStart).toLocaleDateString('vi-VN', { month: '2-digit', day: '2-digit' }) : "N/A"}</span>  
                 <span> - </span>
                 <span>{deviceSetting?.timeEnd ? new Date(deviceSetting?.timeEnd).toLocaleDateString('vi-VN', { month: '2-digit', day: '2-digit' }) : "N/A"}</span>
               </p>
-              <p className="font-dosis font-light text-xl text-mau3">giá trị</p>
+              <p className="font-dosis font-light text-xl text-mau3">Giá trị</p>
               <p className="font-dosis font-light text-xl text-mau3">
-                {deviceSetting.devices?.[0]?.valueStart} - {deviceSetting.devices?.[0]?.valueEnd}
+                {deviceSetting?.devices?.[0]?.valueStart} - {deviceSetting?.devices?.[0]?.valueEnd}
               </p>
             </>
-          )}
-          {mode === false && (
-            <>
-              <h2 className="font-josefin font-bold text-xl text-mau3">THỦ CÔNG</h2>
-              <p className="font-dosis font-light text-xl text-mau3">theo người dùng điều chỉnh</p>
-            </>
-          )}
         </div>
         <Link
           href={`/deviceSetting/${id}`}
@@ -119,7 +110,7 @@ function Card() {
           .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
           .then((data) => {
             setDevices(data.data); // cập nhật state
-            console.log(data)
+            //console.log("Device card:", data)
           })
           .catch((err) => {
             console.error("Lỗi khi gọi API devices:", err);
@@ -135,7 +126,7 @@ function Card() {
   }, [accessToken]);
 
   return (
-    <div className="bg-mau3 w-full rounded-t-xl flex flex-col">
+    <div className="bg-mau3 w-full h-full rounded-t-xl flex flex-col">
       {devices && devices.length > 0 ? (
         devices.map((device) => <DisplayCard key={device.id} device={device} />)
       ) : (
